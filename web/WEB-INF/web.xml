@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app>
+	<servlet>
+		<servlet-name>PropertyServlet</servlet-name>
+		<servlet-class>tmall.servlet.PropertyServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>PropertyServlet</servlet-name>
+		<url-pattern>/propertyServlet</url-pattern>
+	</servlet-mapping>
+	
     <servlet>
         <servlet-name>CategoryServlet</servlet-name>
         <servlet-class>tmall.servlet.CategoryServlet</servlet-class>

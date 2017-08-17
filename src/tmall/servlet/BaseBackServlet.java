@@ -63,20 +63,25 @@ public abstract class BaseBackServlet extends HttpServlet {
 			}
 			Page page = new Page(start,count);
 			
-			/*鍊熷姪鍙嶅皠锛岃皟鐢ㄥ搴旂殑鏂规硶*/
+			/*借助反射，调用对应的方法*/
 			String method = (String) request.getAttribute("method");
 			Method m = this.getClass().getMethod(method, javax.servlet.http.HttpServletRequest.class,
 					javax.servlet.http.HttpServletResponse.class,Page.class);
 			String redirect = m.invoke(this,request, response,page).toString();
 			
-			/*鏍规嵁鏂规硶鐨勮繑鍥炲�硷紝杩涜鐩稿簲鐨勫鎴风璺宠浆锛屾湇鍔＄璺宠浆锛屾垨鑰呬粎浠呮槸杈撳嚭瀛楃涓�*/
-			
-			if(redirect.startsWith("@"))
-				response.sendRedirect(redirect.substring(1));
+			/*根据方法的返回值，进行相应的客户端跳转，服务端跳转，或者仅仅是输出字符串*/
+			System.out.println(">>>>>>>>>Service method:" + method + "+++++++redirect:" + redirect);
+			if(redirect.startsWith("@")){
+				System.out.println("客户端跳转：" + redirect.substring(1));
+				response.sendRedirect(redirect.substring(1));//客户端跳转
+			}
 			else if(redirect.startsWith("%"))
 				response.getWriter().print(redirect.substring(1));
 			else
-				request.getRequestDispatcher(redirect).forward(request, response);
+			{
+				System.out.println("服务器跳转：" + redirect);
+				request.getRequestDispatcher(redirect).forward(request, response);//服务器跳转
+			}
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

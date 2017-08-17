@@ -30,7 +30,6 @@ public class CategoryServlet extends BaseBackServlet {
 		categoryDAO.add(c);
 		
 		File imageFolder = new File(request.getSession().getServletContext().getRealPath("img/category"));
-		System.out.println(">>>>>>>>>>>>path:" + request.getSession().getServletContext() + ">>>>>:" + request.getSession().getServletContext().getRealPath("img/category"));
 		File file = new File(imageFolder, c.getId()+".jpg");
 		try{
 			if(null != is && 0 != is.available()){
